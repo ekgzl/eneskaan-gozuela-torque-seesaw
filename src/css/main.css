@@ -64,11 +64,27 @@ main{
     background: #c9782d88;
 }
 
-
 .card-footer{
     width: 95%;
     display: flex;
     gap: 4px;
     align-items: center;
     justify-content:space-around;
+}
+
+.history-btn{
+    width: 32px;
+position: absolute;
+top: 20px;
+right: 20px;
+font-size:xx-large;
+    cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.history-p{
+margin: 0px;
+margin-bottom: -6px;
 }
