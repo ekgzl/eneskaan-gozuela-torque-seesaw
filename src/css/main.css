@@ -34,7 +34,7 @@ main{
 
 .inside-screen{
     flex: 1;
-    width: 90%;
+    width: 500px;
     background: #c9782d88;
     cursor: crosshair;
 }
@@ -42,12 +42,14 @@ main{
 .log{
     width: 64px;
     margin-top: -37px;
+    pointer-events: none;
 }
 
 .plank{
     width: 500px;
     height: 60px;
     z-index: 333;
+    pointer-events: none;
 }
 
 .section{
