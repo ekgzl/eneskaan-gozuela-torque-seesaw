@@ -7,7 +7,9 @@
     <title>Document</title>
   </head>
   <body>
+    <!-- Main -->
     <main class="centered">
+      <!-- History Part -->
       <button class="history-btn rounded-box">
         <p class="history-p">⤿</p>
       </button>
@@ -20,28 +22,31 @@
           </ul>
         </div>
       </div>
+      <!-- Central Big Card-->
       <div class="card centered">
-        <div class="inside-screen centered rounded-box">
-          <img class="plank" src="./public/tahta.png" alt="plank" />
+        <!-- Seesaw Simulation Screen  -->
+        <div class="inside-screen centered rounded-box" id="inside-screen">
+          <img class="plank" src="./public/tahta.png" alt="plank" id="plank" />
           <img class="log" src="./public/denge.png" alt="log" />
         </div>
+        <!-- Info Screens -->
         <div class="card-footer">
           <div class="section s1 rounded-box">
             <p>Left Weight</p>
-            <p>10</p>
+            <p id="left-weight">10</p>
           </div>
           <div class="section s2 rounded-box">
             <p>Next Weight</p>
-            <p>10</p>
+            <p id="next-weight">10</p>
           </div>
           <button class="reset-btn">Reset Seesaw</button>
           <div class="section s3 rounded-box">
             <p>Tilt Angle</p>
-            <p>10</p>
+            <p id="angle">10</p>
           </div>
           <div class="section s4 rounded-box">
             <p>Right Weight</p>
-            <p>10</p>
+            <p id="right-weight">10</p>
           </div>
         </div>
       </div>
