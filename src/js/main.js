@@ -53,12 +53,30 @@ function calculateTorque(distance, weight) {
   return distance * weight * 9.8;
 }
 
+function createElement(distance) {
+  const newElement = document.createElement("img");
+  newElement.src = "../../public/balon.png";
+  newElement.style.position = "absolute";
+
+  const plankHeight = plank.offsetLeft;
+  const plankTop = plank.offsetTop;
+
+  newElement.style.width = "32px";
+  newElement.style.height = "32px";
+  newElement.style.top = `${plankTop - parseInt(newElement.style.height)}px`;
+  newElement.style.left = `${
+    plankHeight + distance - parseInt(newElement.style.height) / 2
+  }px`;
+
+  insideScreen.appendChild(newElement);
+}
+
 function calculateAngle() {
   return Math.max(-30, Math.min(30, (rightTorque - leftTorque) / 10));
 }
 
 insideScreen.addEventListener("click", function (event) {
-  // event.offsetX div'in sol kenarına uzaklığı pixel olarak veriyor
+  // event.offsetX div'in sol kenarına uzaklığı piksel olarak veriyor
   // this.offsetWidth div'in toplam genişliğini veriyor
   const centerPoint = this.offsetWidth / 2;
   const distance = event.offsetX;
@@ -70,7 +88,7 @@ insideScreen.addEventListener("click", function (event) {
     const realDistance = (distance - centerPoint) / 50;
     handleClick("right", realDistance);
   }
-
+  createElement(distance);
   angleDisplay.innerHTML = calculateAngle().toFixed(2);
   plank.style.transform = `rotate(${parseInt(angleDisplay.textContent)}deg)`;
 });

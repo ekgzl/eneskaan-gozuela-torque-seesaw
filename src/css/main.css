@@ -50,6 +50,7 @@ main{
     height: 60px;
     z-index: 333;
     pointer-events: none;
+    position: relative;
 }
 
 .section{
