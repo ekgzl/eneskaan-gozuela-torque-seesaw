@@ -47,9 +47,9 @@ main{
     cursor: crosshair;
 }
 
-.log{
+.pivot{
     width: 64px;
-    margin-top: -37px;
+    margin-top: -106px;
     pointer-events: none;
 }
 img{
@@ -58,7 +58,7 @@ img{
 }
 .plank{
     width: 500px;
-    height: 60px;
+    height: 200px;
     z-index: 333;
     pointer-events: none;
     position: relative;
@@ -146,6 +146,7 @@ padding: 6px;
     right: 20px;
     visibility: hidden;
     overflow: hidden;
+    color: white;
 }
 
 .history-card-list{
@@ -203,7 +204,7 @@ margin-bottom: -6px;
 .plank-box {
     position: relative;
     width: 500px;
-    height: 60px;
+    height: 200px;
     transform-origin: center center;
     transition: transform 0.3s ease;
     z-index: 333;

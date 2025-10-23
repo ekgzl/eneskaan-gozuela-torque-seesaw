@@ -1,5 +1,4 @@
 const plank = document.getElementById("plank");
-const log = document.getElementById("log");
 const leftWeightDisplay = document.getElementById("left-weight");
 const rightWeightDisplay = document.getElementById("right-weight");
 const angleDisplay = document.getElementById("angle");
@@ -22,14 +21,14 @@ function pushInLog(message) {
   historyListUl.appendChild(newLogEntry);
 }
 
-function pushInArray(log) {
-  objects.push(log);
+function pushInArray(droppedObject) {
+  objects.push(droppedObject);
 }
 
-function createHistoryMessage(log) {
-  const message = `${log.weight}kg dropped on ${
-    log.side
-  } side of seesaw. It is ${(log.distance * 50).toFixed(
+function createHistoryMessage(droppedObject) {
+  const message = `${droppedObject.weight}kg dropped on ${
+    droppedObject.side
+  } side of seesaw. It is ${(droppedObject.distance * 50).toFixed(
     1
   )}px far away from the center of seesaw`;
   return message;
@@ -67,7 +66,7 @@ function handleClick(droppedObject) {
 }
 
 function calculateTorque(droppedObject) {
-  return droppedObject.distance * droppedObject.weight * 9.8;
+  return droppedObject.distance * droppedObject.weight;
 }
 
 function createDroppedElement(droppedObject) {
@@ -78,9 +77,17 @@ function createDroppedElement(droppedObject) {
   const plankOffsetLeft = plank.offsetLeft;
   const plankOffsetTop = plank.offsetTop;
 
-  newDroppedElement.style.width = "48px";
-  newDroppedElement.style.height = "48px";
-  newDroppedElement.style.top = `${plankOffsetTop - plank.height / 3}px`;
+  if (droppedObject.weight === 8) {
+    newDroppedElement.style.height = "128px";
+  } else {
+    newDroppedElement.style.width = "48px";
+    newDroppedElement.style.height = "48px";
+  }
+  if (droppedObject.weight === 8) {
+    newDroppedElement.style.top = `-25px`;
+  } else {
+    newDroppedElement.style.top = `40px`;
+  }
   newDroppedElement.style.left = `${
     plankOffsetLeft +
     droppedObject.distance -
@@ -91,7 +98,7 @@ function createDroppedElement(droppedObject) {
 }
 
 function calculateAngle() {
-  return Math.max(-30, Math.min(30, (rightTorque - leftTorque) / 10));
+  return Math.max(-30, Math.min(30, rightTorque - leftTorque));
 }
 
 insideScreen.addEventListener("click", function (event) {
@@ -127,7 +134,6 @@ insideScreen.addEventListener("click", function (event) {
 });
 
 function handleIsHistoryCardVisible() {
-  console.log("sa");
   if (isHistoryCardVisible) {
     historyCard.style.visibility = "hidden";
     isHistoryCardVisible = false;
