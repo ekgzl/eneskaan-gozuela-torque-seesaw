@@ -26,7 +26,7 @@
         <!-- Seesaw Simulation Screen  -->
         <div class="inside-screen centered rounded-box" id="inside-screen">
           <img class="plank" src="./public/tahta.png" alt="plank" id="plank" />
-          <img class="log" src="./public/denge.png" alt="log" />
+          <img class="log" src="./public/denge.png" alt="log" id="log" />
         </div>
         <!-- Info Screens -->
         <div class="card-footer">
@@ -38,7 +38,9 @@
             <p>NEXT WEIGHT</p>
             <p class="measurement"><span id="next-weight"></span> kg</p>
           </div>
-          <button class="reset-btn">Reset Simulation</button>
+          <button class="reset-btn" onclick="resetSimulation()">
+            Reset Simulation
+          </button>
           <div class="section s3 rounded-box">
             <p>TILT ANGLE</p>
             <p class="measurement"><span id="angle">0</span>°</p>

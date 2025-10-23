@@ -124,7 +124,7 @@ insideScreen.addEventListener("click", function (event) {
     distance: distance,
     weight: weight,
   });
-  angleDisplay.innerHTML = calculateAngle().toFixed(2);
+  angleDisplay.innerHTML = calculateAngle().toFixed(1);
   plank.style.transform = `rotate(${parseInt(angleDisplay.textContent)}deg)`;
 });
 
@@ -137,4 +137,23 @@ function handleIsHistoryCardVisible() {
     historyCard.style.visibility = "visible";
     isHistoryCardVisible = true;
   }
+}
+
+function resetSimulation() {
+  objects = [];
+  rightTorque = 0;
+  leftTorque = 0;
+  leftWeightDisplay.innerHTML = "0";
+  rightWeightDisplay.innerHTML = "0";
+  angleDisplay.innerHTML = "0.0";
+  plank.style.transform = "rotate(0deg)";
+  historyListUl.innerHTML = "";
+  const droppedWeights = insideScreen.querySelectorAll("img");
+  droppedWeights.forEach((weight) => {
+    if (weight.id === "plank" || weight.id === "log") {
+      return;
+    }
+    weight.remove();
+  });
+  nextWeightDisplay.innerHTML = generateRandomWeight();
 }
