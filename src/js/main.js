@@ -5,30 +5,51 @@ const rightWeightDisplay = document.getElementById("right-weight");
 const angleDisplay = document.getElementById("angle");
 const nextWeightDisplay = document.getElementById("next-weight");
 const insideScreen = document.getElementById("inside-screen");
+const historyListUl = document.getElementById("history-card-list-ul");
+const historyCard = document.getElementById("history-card");
 
 //querycSelector -> class
-
 nextWeightDisplay.innerHTML = generateRandomWeight();
 
 let objects = [];
 let rightTorque = 0;
 let leftTorque = 0;
+let isHistoryCardVisible = false;
 
-function addWeightToSide(side, weight) {
-  if (side === "right") {
+function pushInLog(message) {
+  const newLogEntry = document.createElement("li");
+  newLogEntry.innerHTML = message;
+  historyListUl.appendChild(newLogEntry);
+}
+
+function pushInArray(log) {
+  objects.push(log);
+}
+
+function createHistoryMessage(log) {
+  const message = `${log.weight}kg dropped on ${
+    log.side
+  } side of seesaw. It is ${(log.distance * 50).toFixed(
+    1
+  )}px far away from the center of seesaw`;
+  return message;
+}
+
+function addWeightToSide(droppedObject) {
+  if (droppedObject.side === "right") {
     rightWeightDisplay.innerHTML =
-      parseInt(rightWeightDisplay.textContent) + weight;
+      parseInt(rightWeightDisplay.textContent) + droppedObject.weight;
   } else {
     leftWeightDisplay.innerHTML =
-      parseInt(leftWeightDisplay.textContent) + weight;
+      parseInt(leftWeightDisplay.textContent) + droppedObject.weight;
   }
 }
 
-function addTorqueToSide(side, weight, distance) {
-  if (side === "right") {
-    rightTorque += calculateTorque(distance, weight);
+function addTorqueToSide(droppedObject) {
+  if (droppedObject.side === "right") {
+    rightTorque += calculateTorque(droppedObject);
   } else {
-    leftTorque += calculateTorque(distance, weight);
+    leftTorque += calculateTorque(droppedObject);
   }
 }
 
@@ -36,39 +57,39 @@ function generateRandomWeight() {
   return Math.floor(Math.random() * 10) + 1;
 }
 
-function handleClick(side, distance) {
-  const weight = parseInt(nextWeightDisplay.textContent);
-  objects.push({
-    weight,
-    side,
-    distance,
-  });
-  addWeightToSide(side, weight);
-  addTorqueToSide(side, weight, distance);
+function handleClick(droppedObject) {
+  pushInArray(droppedObject);
+  addWeightToSide(droppedObject);
+  addTorqueToSide(droppedObject);
+  pushInLog(createHistoryMessage(droppedObject));
   let randomWeight = generateRandomWeight();
   nextWeightDisplay.innerHTML = randomWeight;
 }
 
-function calculateTorque(distance, weight) {
-  return distance * weight * 9.8;
+function calculateTorque(droppedObject) {
+  return droppedObject.distance * droppedObject.weight * 9.8;
 }
 
-function createElement(distance) {
-  const newElement = document.createElement("img");
-  newElement.src = "../../public/balon.png";
-  newElement.style.position = "absolute";
+function createDroppedElement(droppedObject) {
+  const newDroppedElement = document.createElement("img");
+  newDroppedElement.src = `../../public/weights/weight-${droppedObject.weight}kg.png`;
+  newDroppedElement.style.position = "absolute";
 
   const plankHeight = plank.offsetLeft;
   const plankTop = plank.offsetTop;
 
-  newElement.style.width = "32px";
-  newElement.style.height = "32px";
-  newElement.style.top = `${plankTop - parseInt(newElement.style.height)}px`;
-  newElement.style.left = `${
-    plankHeight + distance - parseInt(newElement.style.height) / 2
+  newDroppedElement.style.width = "48px";
+  newDroppedElement.style.height = "48px";
+  newDroppedElement.style.top = `${
+    plankTop - parseInt(newDroppedElement.style.height)
+  }px`;
+  newDroppedElement.style.left = `${
+    plankHeight +
+    droppedObject.distance -
+    parseInt(newDroppedElement.style.height) / 2
   }px`;
 
-  insideScreen.appendChild(newElement);
+  insideScreen.appendChild(newDroppedElement);
 }
 
 function calculateAngle() {
@@ -80,15 +101,40 @@ insideScreen.addEventListener("click", function (event) {
   // this.offsetWidth div'in toplam genişliğini veriyor
   const centerPoint = this.offsetWidth / 2;
   const distance = event.offsetX;
+  const weight = parseInt(nextWeightDisplay.textContent);
 
   if (distance < centerPoint) {
     const realDistance = (centerPoint - distance) / 50;
-    handleClick("left", realDistance);
+    const droppedObject = {
+      weight: weight,
+      side: "left",
+      distance: realDistance,
+    };
+    handleClick(droppedObject);
   } else {
     const realDistance = (distance - centerPoint) / 50;
-    handleClick("right", realDistance);
+    const droppedObject = {
+      weight: weight,
+      side: "right",
+      distance: realDistance,
+    };
+    handleClick(droppedObject);
   }
-  createElement(distance);
+  createDroppedElement({
+    distance: distance,
+    weight: weight,
+  });
   angleDisplay.innerHTML = calculateAngle().toFixed(2);
   plank.style.transform = `rotate(${parseInt(angleDisplay.textContent)}deg)`;
 });
+
+function handleIsHistoryCardVisible() {
+  console.log("sa");
+  if (isHistoryCardVisible) {
+    historyCard.style.visibility = "hidden";
+    isHistoryCardVisible = false;
+  } else {
+    historyCard.style.visibility = "visible";
+    isHistoryCardVisible = true;
+  }
+}

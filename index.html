@@ -10,16 +10,15 @@
     <!-- Main -->
     <main class="centered">
       <!-- History Part -->
-      <button class="history-btn rounded-box">
+      <button
+        class="history-btn rounded-box"
+        onclick="handleIsHistoryCardVisible()"
+      >
         <p class="history-p">⤿</p>
       </button>
-      <div class="history-card centered rounded-box">
-        <div class="history-card-list">
-          <ul>
-            <li><span>50</span> kg dropped.(Meteor)</li>
-            <li><span>10</span> kg dropped.(Iron)</li>
-            <li><span>5</span> kg dropped.(Baloon)</li>
-          </ul>
+      <div class="history-card centered rounded-box" id="history-card">
+        <div class="history-card-list" id="scrollbar">
+          <ul id="history-card-list-ul"></ul>
         </div>
       </div>
       <!-- Central Big Card-->
@@ -32,21 +31,21 @@
         <!-- Info Screens -->
         <div class="card-footer">
           <div class="section s1 rounded-box">
-            <p>Left Weight</p>
-            <p><span id="left-weight">0</span> kg</p>
+            <p>LEFT WEIGHT</p>
+            <p class="measurement"><span id="left-weight">0</span> kg</p>
           </div>
           <div class="section s2 rounded-box">
-            <p>Next Weight</p>
-            <p><span id="next-weight"></span> kg</p>
+            <p>NEXT WEIGHT</p>
+            <p class="measurement"><span id="next-weight"></span> kg</p>
           </div>
-          <button class="reset-btn">Reset Seesaw</button>
+          <button class="reset-btn">Reset Simulation</button>
           <div class="section s3 rounded-box">
-            <p>Tilt Angle</p>
-            <p><span id="angle">0</span>°</p>
+            <p>TILT ANGLE</p>
+            <p class="measurement"><span id="angle">0</span>°</p>
           </div>
           <div class="section s4 rounded-box">
-            <p>Right Weight</p>
-            <p><span id="right-weight">0</span> kg</p>
+            <p>RIGHT WEIGHT</p>
+            <p class="measurement"><span id="right-weight">0</span> kg</p>
           </div>
         </div>
       </div>

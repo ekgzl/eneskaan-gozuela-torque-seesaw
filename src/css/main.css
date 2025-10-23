@@ -1,6 +1,8 @@
 html, body {
     height: 100%;
     margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+    font-weight: 500;
 }
 
 .centered {
@@ -30,6 +32,9 @@ main{
     border: 0.1px solid #aa5815a9;
     border-radius: 30px;
     gap:10px;
+     color: #dad8d7;
+  font-size: large
+  ;
 }
 
 .inside-screen{
@@ -44,7 +49,10 @@ main{
     margin-top: -37px;
     pointer-events: none;
 }
-
+img{
+    /* üstüne tıklayınca en sola resimleri atmasın diye */
+    pointer-events: none;
+}
 .plank{
     width: 500px;
     height: 60px;
@@ -72,14 +80,56 @@ main{
     top: 20px;
     right: 20px;
     font-size: xx-large;
-    cursor: pointer;
-    background: #834116a9; 
-    box-shadow: 0px 0px 5px 0.1px rgba(27, 3, 3, 0.514);
-    transition: background 0.2s;
+  color: #ffffff;
+        background: #834116a9;    
 }
 
-.history-btn:hover {
-    background: #a05a1fa9;
+
+.history-btn:hover{
+background: #a05a1fa9;
+}
+
+button{
+    cursor: pointer;
+    box-shadow: 0px 0px 5px 0.1px rgba(27, 3, 3, 0.514);
+    transition: background 0.2s;
+    border: 0.5px solid;
+}
+
+
+.reset-btn{
+font-size: medium;
+padding: 6px;
+}
+
+.reset-btn {
+  background-color: transparent;
+  color: #e2dfdc;
+  border: 1px solid #dad5d0;
+  position: relative;
+  border-radius: 10px;
+}
+
+.reset-btn::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #0000006b;
+  transition: width 0.3s ease;
+  z-index: -1;
+  border-radius: 10px;
+}
+
+.reset-btn:hover::after {
+  width: 100%;
+}
+
+.reset-btn:hover {
+  color: rgba(248, 245, 245, 0.897);
+
 }
 
 .history-card{
@@ -91,19 +141,58 @@ main{
     position: absolute;
     top: 60px;
     right: 20px;
+    visibility: hidden;
+    overflow: hidden;
 }
 
 .history-card-list{
     width: 100%;
     text-align: start;
+    overflow: auto;
+    border-radius: 30px;
 }
 
 .rounded-box {
-    border-radius: 30px;
+    border-radius: 20%;
     border: 0.3px solid #aa5815a9;
 }
 
 .history-p{
 margin: 0px;
 margin-bottom: -6px;
+}
+
+
+/*  copy-paste from some website for styling css */
+#scrollbar::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#scrollbar::-webkit-scrollbar
+{
+	width: 2px;
+	background-color: #F5F5F5;
+}
+
+#scrollbar::-webkit-scrollbar-thumb
+{
+	background-color: rgb(65, 94, 58);	
+    max-height:0.5px;
+	background-image: -webkit-linear-gradient(90deg,
+	                                          rgba(255, 255, 255, .2) 25%,
+											  transparent 25%,
+											  transparent 50%,
+											  rgba(255, 255, 255, .2) 50%,
+											  rgba(255, 255, 255, .2) 75%,
+											  transparent 75%,
+											  transparent)
+}
+
+/* ------ */
+
+.measurement{
+    color: white;
+    font-weight: 700;
 }
