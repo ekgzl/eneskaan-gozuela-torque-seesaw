@@ -63,6 +63,7 @@ function handleClick(droppedObject) {
   pushInLog(createHistoryMessage(droppedObject));
   let randomWeight = generateRandomWeight();
   nextWeightDisplay.innerHTML = randomWeight;
+  saveToLocalStorage();
 }
 
 function calculateTorque(droppedObject) {
@@ -75,7 +76,6 @@ function createDroppedElement(droppedObject) {
   newDroppedElement.style.position = "absolute";
 
   const plankOffsetLeft = plank.offsetLeft;
-  const plankOffsetTop = plank.offsetTop;
 
   if (droppedObject.weight === 8) {
     newDroppedElement.style.height = "128px";
@@ -154,10 +154,68 @@ function resetSimulation() {
   historyListUl.innerHTML = "";
   const droppedWeights = insideScreen.querySelectorAll("img");
   droppedWeights.forEach((weight) => {
-    if (weight.id === "plank" || weight.id === "log") {
+    if (weight.id === "plank" || weight.id === "pivot") {
       return;
     }
     weight.remove();
   });
   nextWeightDisplay.innerHTML = generateRandomWeight();
 }
+
+function saveToLocalStorage() {
+  const simulationData = {
+    objects: objects,
+    rightTorque: rightTorque,
+    leftTorque: leftTorque,
+    nextWeight: parseInt(nextWeightDisplay.textContent),
+    historyLog: historyListUl.innerHTML,
+  };
+  localStorage.setItem("seesaw", JSON.stringify(simulationData));
+}
+
+function loadFromLocalStorage() {
+  const savedData = localStorage.getItem("seesaw");
+  if (savedData) {
+    const simulationData = JSON.parse(savedData);
+
+    objects = simulationData.objects;
+    rightTorque = simulationData.rightTorque;
+    leftTorque = simulationData.leftTorque;
+
+    let totalLeftWeight = 0;
+    let totalRightWeight = 0;
+
+    objects.forEach((obj) => {
+      if (obj.side === "left") {
+        totalLeftWeight += obj.weight;
+      } else {
+        totalRightWeight += obj.weight;
+      }
+    });
+
+    leftWeightDisplay.innerHTML = totalLeftWeight;
+    rightWeightDisplay.innerHTML = totalRightWeight;
+    nextWeightDisplay.innerHTML = simulationData.nextWeight;
+    historyListUl.innerHTML = simulationData.historyLog;
+
+    objects.forEach((obj) => {
+      const centerPoint = insideScreen.offsetWidth / 2;
+      const distance =
+        obj.side === "left"
+          ? centerPoint - obj.distance * 50
+          : centerPoint + obj.distance * 50;
+
+      createDroppedElement({
+        distance: distance,
+        weight: obj.weight,
+      });
+    });
+
+    angleDisplay.innerHTML = calculateAngle().toFixed(1);
+    plankBox.style.transform = `rotate(${parseInt(
+      angleDisplay.textContent
+    )}deg)`;
+  }
+}
+
+loadFromLocalStorage();
