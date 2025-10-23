@@ -25,7 +25,15 @@
       <div class="card centered">
         <!-- Seesaw Simulation Screen  -->
         <div class="inside-screen centered rounded-box" id="inside-screen">
-          <img class="plank" src="./public/tahta.png" alt="plank" id="plank" />
+          <!-- plank için parent div çünkü child eklenecek (childlar: ağırlıklar) -->
+          <div class="plank-box" id="plank-box">
+            <img
+              class="plank"
+              src="./public/tahta.png"
+              alt="plank"
+              id="plank"
+            />
+          </div>
           <img class="log" src="./public/denge.png" alt="log" id="log" />
         </div>
         <!-- Info Screens -->

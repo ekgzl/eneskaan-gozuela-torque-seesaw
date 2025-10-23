@@ -7,7 +7,7 @@ const nextWeightDisplay = document.getElementById("next-weight");
 const insideScreen = document.getElementById("inside-screen");
 const historyListUl = document.getElementById("history-card-list-ul");
 const historyCard = document.getElementById("history-card");
-
+const plankBox = document.getElementById("plank-box");
 //querycSelector -> class
 nextWeightDisplay.innerHTML = generateRandomWeight();
 
@@ -75,21 +75,19 @@ function createDroppedElement(droppedObject) {
   newDroppedElement.src = `../../public/weights/weight-${droppedObject.weight}kg.png`;
   newDroppedElement.style.position = "absolute";
 
-  const plankHeight = plank.offsetLeft;
-  const plankTop = plank.offsetTop;
+  const plankOffsetLeft = plank.offsetLeft;
+  const plankOffsetTop = plank.offsetTop;
 
   newDroppedElement.style.width = "48px";
   newDroppedElement.style.height = "48px";
-  newDroppedElement.style.top = `${
-    plankTop - parseInt(newDroppedElement.style.height)
-  }px`;
+  newDroppedElement.style.top = `${plankOffsetTop - plank.height / 3}px`;
   newDroppedElement.style.left = `${
-    plankHeight +
+    plankOffsetLeft +
     droppedObject.distance -
     parseInt(newDroppedElement.style.height) / 2
   }px`;
 
-  insideScreen.appendChild(newDroppedElement);
+  plankBox.appendChild(newDroppedElement);
 }
 
 function calculateAngle() {
@@ -125,7 +123,7 @@ insideScreen.addEventListener("click", function (event) {
     weight: weight,
   });
   angleDisplay.innerHTML = calculateAngle().toFixed(1);
-  plank.style.transform = `rotate(${parseInt(angleDisplay.textContent)}deg)`;
+  plankBox.style.transform = `rotate(${parseInt(angleDisplay.textContent)}deg)`;
 });
 
 function handleIsHistoryCardVisible() {
