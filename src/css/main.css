@@ -36,7 +36,7 @@ main{
     border-radius: 30px;
     gap:10px;
      color: #dad8d7;
-  font-size: large
+  font-size: medium
   ;
 }
 
@@ -66,7 +66,7 @@ img{
 
 .section{
     width: 150px;
-    height: 140px;
+    height: 100px;
     background: #c9782d88;
 }
 
