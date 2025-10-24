@@ -74,6 +74,7 @@ function createDroppedElement(droppedObject) {
   const newDroppedElement = document.createElement("img");
   newDroppedElement.src = `../../public/weights/weight-${droppedObject.weight}kg.png`;
   newDroppedElement.style.position = "absolute";
+  newDroppedElement.classList.add("falling-element");
 
   const plankOffsetLeft = plank.offsetLeft;
 
