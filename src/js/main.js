@@ -1,15 +1,7 @@
-const plank = document.getElementById("plank");
-const leftWeightDisplay = document.getElementById("left-weight");
-const rightWeightDisplay = document.getElementById("right-weight");
-const angleDisplay = document.getElementById("angle");
-const nextWeightDisplay = document.getElementById("next-weight");
-const insideScreen = document.getElementById("inside-screen");
-const historyListUl = document.getElementById("history-card-list-ul");
-const historyCard = document.getElementById("history-card");
-const plankBox = document.getElementById("plank-box");
-//querycSelector -> class
-nextWeightDisplay.innerHTML = generateRandomWeight();
-updateNextWeightIcon(nextWeightDisplay.textContent);
+import { DOMElements } from "./domElements.js";
+
+DOMElements.nextWeightDisplay.innerHTML = generateRandomWeight();
+updateNextWeightIcon(DOMElements.nextWeightDisplay.textContent);
 let objects = [];
 let rightTorque = 0;
 let leftTorque = 0;
@@ -18,7 +10,7 @@ let ghostElement = null;
 function pushInLog(message) {
   const newLogEntry = document.createElement("li");
   newLogEntry.innerHTML = message;
-  historyListUl.appendChild(newLogEntry);
+  DOMElements.historyListUl.appendChild(newLogEntry);
 }
 
 function pushInArray(droppedObject) {
@@ -36,11 +28,13 @@ function createHistoryMessage(droppedObject) {
 
 function addWeightToSide(droppedObject) {
   if (droppedObject.side === "right") {
-    rightWeightDisplay.innerHTML =
-      parseInt(rightWeightDisplay.textContent) + droppedObject.weight;
+    DOMElements.rightWeightDisplay.innerHTML =
+      parseInt(DOMElements.rightWeightDisplay.textContent) +
+      droppedObject.weight;
   } else {
-    leftWeightDisplay.innerHTML =
-      parseInt(leftWeightDisplay.textContent) + droppedObject.weight;
+    DOMElements.leftWeightDisplay.innerHTML =
+      parseInt(DOMElements.leftWeightDisplay.textContent) +
+      droppedObject.weight;
   }
 }
 
@@ -62,7 +56,7 @@ function handleClick(droppedObject) {
   addTorqueToSide(droppedObject);
   pushInLog(createHistoryMessage(droppedObject));
   let randomWeight = generateRandomWeight();
-  nextWeightDisplay.innerHTML = randomWeight;
+  DOMElements.nextWeightDisplay.innerHTML = randomWeight;
   updateNextWeightIcon(randomWeight);
   saveToLocalStorage();
 }
@@ -77,7 +71,7 @@ function createDroppedElement(droppedObject) {
   newDroppedElement.style.position = "absolute";
   newDroppedElement.classList.add("falling-element");
 
-  const plankOffsetLeft = plank.offsetLeft;
+  const plankOffsetLeft = DOMElements.plank.offsetLeft;
 
   if (droppedObject.weight === 8) {
     newDroppedElement.style.height = "128px";
@@ -96,19 +90,19 @@ function createDroppedElement(droppedObject) {
     parseInt(newDroppedElement.style.height) / 2
   }px`;
 
-  plankBox.appendChild(newDroppedElement);
+  DOMElements.plankBox.appendChild(newDroppedElement);
 }
 
 function calculateAngle() {
   return Math.max(-30, Math.min(30, rightTorque - leftTorque));
 }
 
-insideScreen.addEventListener("click", function (event) {
+DOMElements.insideScreen.addEventListener("click", function (event) {
   // event.offsetX div'in sol kenarına uzaklığı piksel olarak veriyor
   // this.offsetWidth div'in toplam genişliğini veriyor
   const centerPoint = this.offsetWidth / 2;
   const distance = event.offsetX;
-  const weight = parseInt(nextWeightDisplay.textContent);
+  const weight = parseInt(DOMElements.nextWeightDisplay.textContent);
   const dropSound = document.getElementById("drop-sound");
   if (dropSound) {
     dropSound.currentTime = 0;
@@ -135,8 +129,10 @@ insideScreen.addEventListener("click", function (event) {
     distance: distance,
     weight: weight,
   });
-  angleDisplay.innerHTML = calculateAngle().toFixed(1);
-  plankBox.style.transform = `rotate(${parseInt(angleDisplay.textContent)}deg)`;
+  DOMElements.angleDisplay.innerHTML = calculateAngle().toFixed(1);
+  DOMElements.plankBox.style.transform = `rotate(${parseInt(
+    DOMElements.angleDisplay.textContent
+  )}deg)`;
   if (ghostElement) {
     ghostElement.remove();
     ghostElement = null;
@@ -144,15 +140,15 @@ insideScreen.addEventListener("click", function (event) {
 
   createGhostElement(event);
 
-  plankBox.appendChild(ghostElement);
+  DOMElements.plankBox.appendChild(ghostElement);
 });
 
 function handleIsHistoryCardVisible() {
   if (isHistoryCardVisible) {
-    historyCard.style.visibility = "hidden";
+    DOMElements.historyCard.style.visibility = "hidden";
     isHistoryCardVisible = false;
   } else {
-    historyCard.style.visibility = "visible";
+    DOMElements.historyCard.style.visibility = "visible";
     isHistoryCardVisible = true;
   }
 }
@@ -161,20 +157,20 @@ function resetSimulation() {
   objects = [];
   rightTorque = 0;
   leftTorque = 0;
-  leftWeightDisplay.innerHTML = "0";
-  rightWeightDisplay.innerHTML = "0";
-  angleDisplay.innerHTML = "0";
-  plankBox.style.transform = "rotate(0deg)";
-  historyListUl.innerHTML = "";
-  const droppedWeights = insideScreen.querySelectorAll("img");
+  DOMElements.leftWeightDisplay.innerHTML = "0";
+  DOMElements.rightWeightDisplay.innerHTML = "0";
+  DOMElements.angleDisplay.innerHTML = "0";
+  DOMElements.plankBox.style.transform = "rotate(0deg)";
+  DOMElements.historyListUl.innerHTML = "";
+  const droppedWeights = DOMElements.insideScreen.querySelectorAll("img");
   droppedWeights.forEach((weight) => {
     if (weight.id === "plank" || weight.id === "pivot") {
       return;
     }
     weight.remove();
   });
-  nextWeightDisplay.innerHTML = generateRandomWeight();
-  updateNextWeightIcon(nextWeightDisplay.textContent);
+  DOMElements.nextWeightDisplay.innerHTML = generateRandomWeight();
+  updateNextWeightIcon(DOMElements.nextWeightDisplay.textContent);
   localStorage.removeItem("seesaw");
 }
 
@@ -183,8 +179,8 @@ function saveToLocalStorage() {
     objects: objects,
     rightTorque: rightTorque,
     leftTorque: leftTorque,
-    nextWeight: parseInt(nextWeightDisplay.textContent),
-    historyLog: historyListUl.innerHTML,
+    nextWeight: parseInt(DOMElements.nextWeightDisplay.textContent),
+    historyLog: DOMElements.historyListUl.innerHTML,
   };
   localStorage.setItem("seesaw", JSON.stringify(simulationData));
 }
@@ -209,14 +205,14 @@ function loadFromLocalStorage() {
       }
     });
 
-    leftWeightDisplay.innerHTML = totalLeftWeight;
-    rightWeightDisplay.innerHTML = totalRightWeight;
-    nextWeightDisplay.innerHTML = simulationData.nextWeight;
+    DOMElements.leftWeightDisplay.innerHTML = totalLeftWeight;
+    DOMElements.rightWeightDisplay.innerHTML = totalRightWeight;
+    DOMElements.nextWeightDisplay.innerHTML = simulationData.nextWeight;
     updateNextWeightIcon(simulationData.nextWeight);
-    historyListUl.innerHTML = simulationData.historyLog;
+    DOMElements.historyListUl.innerHTML = simulationData.historyLog;
 
     objects.forEach((obj) => {
-      const centerPoint = insideScreen.offsetWidth / 2;
+      const centerPoint = DOMElements.insideScreen.offsetWidth / 2;
       const distance =
         obj.side === "left"
           ? centerPoint - obj.distance * 50
@@ -228,25 +224,25 @@ function loadFromLocalStorage() {
       });
     });
 
-    angleDisplay.innerHTML = calculateAngle().toFixed(1);
-    plankBox.style.transform = `rotate(${parseInt(
-      angleDisplay.textContent
+    DOMElements.angleDisplay.innerHTML = calculateAngle().toFixed(1);
+    DOMElements.plankBox.style.transform = `rotate(${parseInt(
+      DOMElements.angleDisplay.textContent
     )}deg)`;
   }
 }
 
-insideScreen.addEventListener("mouseenter", function (event) {
+DOMElements.insideScreen.addEventListener("mouseenter", function (event) {
   if (ghostElement) return;
 
   createGhostElement(event);
 
-  plankBox.appendChild(ghostElement);
+  DOMElements.plankBox.appendChild(ghostElement);
 });
 
-insideScreen.addEventListener("mousemove", function (event) {
+DOMElements.insideScreen.addEventListener("mousemove", function (event) {
   if (!ghostElement) return;
 
-  const plankOffsetLeft = plank.offsetLeft;
+  const plankOffsetLeft = DOMElements.plank.offsetLeft;
   const elementWidth = parseInt(ghostElement.style.width);
 
   ghostElement.style.left = `${
@@ -254,7 +250,7 @@ insideScreen.addEventListener("mousemove", function (event) {
   }px`;
 });
 
-insideScreen.addEventListener("mouseleave", function () {
+DOMElements.insideScreen.addEventListener("mouseleave", function () {
   if (ghostElement) {
     ghostElement.remove();
     ghostElement = null;
@@ -262,7 +258,7 @@ insideScreen.addEventListener("mouseleave", function () {
 });
 
 function createGhostElement(event) {
-  const nextWeight = parseInt(nextWeightDisplay.textContent);
+  const nextWeight = parseInt(DOMElements.nextWeightDisplay.textContent);
   ghostElement = document.createElement("img");
   ghostElement.src = `../../public/weights/weight-${nextWeight}kg.png`;
   ghostElement.style.position = "absolute";
@@ -277,7 +273,7 @@ function createGhostElement(event) {
     ghostElement.style.height = "48px";
     ghostElement.style.top = `40px`;
   }
-  const plankOffsetLeft = plank.offsetLeft;
+  const plankOffsetLeft = DOMElements.plank.offsetLeft;
   const elementWidth = parseInt(ghostElement.style.width);
   ghostElement.style.left = `${
     plankOffsetLeft + event.offsetX - elementWidth / 2
@@ -290,5 +286,8 @@ function updateNextWeightIcon(weight) {
     icon.src = `../../public/weights/weight-${weight}kg.png`;
   }
 }
+
+DOMElements.resetButton.addEventListener("click", resetSimulation);
+DOMElements.historyButton.addEventListener("click", handleIsHistoryCardVisible);
 
 loadFromLocalStorage();

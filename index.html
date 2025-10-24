@@ -10,10 +10,7 @@
     <!-- Main -->
     <main class="centered">
       <!-- History Part -->
-      <button
-        class="history-btn rounded-box"
-        onclick="handleIsHistoryCardVisible()"
-      >
+      <button class="history-btn rounded-box">
         <p class="history-p">⤿</p>
       </button>
       <div class="history-card centered rounded-box" id="history-card">
@@ -55,9 +52,7 @@
               </p>
             </div>
           </div>
-          <button class="reset-btn" onclick="resetSimulation()">
-            Reset Simulation
-          </button>
+          <button class="reset-btn">Reset Simulation</button>
           <div class="section-wrap">
             <div class="section s3 rounded-box">
               <p>TILT ANGLE</p>
@@ -72,6 +67,6 @@
       </div>
     </main>
     <audio id="drop-sound" src="./public/drop-sound.mp3"></audio>
-    <script src="./src/js/main.js"></script>
+    <script type="module" src="./src/js/main.js"></script>
   </body>
 </html>
