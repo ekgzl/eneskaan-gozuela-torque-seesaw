@@ -160,6 +160,7 @@ function resetSimulation() {
     weight.remove();
   });
   nextWeightDisplay.innerHTML = generateRandomWeight();
+  localStorage.removeItem("seesaw");
 }
 
 function saveToLocalStorage() {
