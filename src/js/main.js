@@ -14,7 +14,7 @@ let objects = [];
 let rightTorque = 0;
 let leftTorque = 0;
 let isHistoryCardVisible = false;
-
+let ghostElement = null;
 function pushInLog(message) {
   const newLogEntry = document.createElement("li");
   newLogEntry.innerHTML = message;
@@ -131,6 +131,14 @@ insideScreen.addEventListener("click", function (event) {
   });
   angleDisplay.innerHTML = calculateAngle().toFixed(1);
   plankBox.style.transform = `rotate(${parseInt(angleDisplay.textContent)}deg)`;
+  if (ghostElement) {
+    ghostElement.remove();
+    ghostElement = null;
+  }
+
+  createGhostElement(event);
+
+  plankBox.appendChild(ghostElement);
 });
 
 function handleIsHistoryCardVisible() {
@@ -149,8 +157,8 @@ function resetSimulation() {
   leftTorque = 0;
   leftWeightDisplay.innerHTML = "0";
   rightWeightDisplay.innerHTML = "0";
-  angleDisplay.innerHTML = "0.0";
-  plank.style.transform = "rotate(0deg)";
+  angleDisplay.innerHTML = "0";
+  plankBox.style.transform = "rotate(0deg)";
   historyListUl.innerHTML = "";
   const droppedWeights = insideScreen.querySelectorAll("img");
   droppedWeights.forEach((weight) => {
@@ -217,6 +225,57 @@ function loadFromLocalStorage() {
       angleDisplay.textContent
     )}deg)`;
   }
+}
+
+insideScreen.addEventListener("mouseenter", function (event) {
+  if (ghostElement) return;
+
+  createGhostElement(event);
+
+  plankBox.appendChild(ghostElement);
+});
+
+insideScreen.addEventListener("mousemove", function (event) {
+  if (!ghostElement) return;
+
+  const plankOffsetLeft = plank.offsetLeft;
+  const elementWidth = parseInt(ghostElement.style.width);
+
+  ghostElement.style.left = `${
+    plankOffsetLeft + event.offsetX - elementWidth / 2
+  }px`;
+});
+
+insideScreen.addEventListener("mouseleave", function () {
+  if (ghostElement) {
+    ghostElement.remove();
+    ghostElement = null;
+  }
+});
+
+function createGhostElement(event) {
+  const nextWeight = parseInt(nextWeightDisplay.textContent);
+  ghostElement = document.createElement("img");
+  ghostElement.src = `../../public/weights/weight-${nextWeight}kg.png`;
+  ghostElement.style.position = "absolute";
+  ghostElement.style.opacity = "0.5";
+  ghostElement.style.pointerEvents = "none";
+  if (nextWeight === 8) {
+    ghostElement.style.height = "128px";
+    ghostElement.style.top = `-25px`;
+    ghostElement.style.width = "72px";
+  } else {
+    ghostElement.style.width = "48px";
+    ghostElement.style.width = "48px";
+
+    ghostElement.style.height = "48px";
+    ghostElement.style.top = `40px`;
+  }
+  const plankOffsetLeft = plank.offsetLeft;
+  const elementWidth = parseInt(ghostElement.style.width);
+  ghostElement.style.left = `${
+    plankOffsetLeft + event.offsetX - elementWidth / 2
+  }px`;
 }
 
 loadFromLocalStorage();
