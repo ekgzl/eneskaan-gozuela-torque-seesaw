@@ -22,6 +22,7 @@ body{
 background-image: url('../../public/bg.png');
     background-repeat:no-repeat;
     background-size: 106%;
+    background-size: cover;
 }
 
 main{
@@ -32,12 +33,12 @@ main{
     padding: 10px;
     width: 50%;
     height: 85%;
-    background: #834116a9;
+    background: #bd8a5bcf;
     box-shadow: 0px 0px 10px 0.1px rgba(27, 3, 3, 0.623);
-    border: 0.1px solid #aa5815a9;
+    border: 0.1px solid #96775f;
     border-radius: 30px;
     gap:10px;
-     color: #dad8d7;
+     color: #E0C29B;
   font-size: medium
   ;
 }
@@ -45,7 +46,7 @@ main{
 .inside-screen{
     flex: 1;
     width: 500px;
-    background: #c9782d88;
+    background: #4d302a1b;
     cursor: crosshair;
 }
 
@@ -69,7 +70,7 @@ img{
 .section{
     width: 150px;
     height: 100px;
-    background: #c9782d88;
+    background: #043c5c9c;
 }
 
 .card-footer{
@@ -86,12 +87,12 @@ img{
     right: 20px;
     font-size: xx-large;
   color: #ffffff;
-        background: #834116a9;    
+        background: #043c5c9c;    
 }
 
 
 .history-btn:hover{
-background: #a05a1fa9;
+background: #043c5c6a;
 }
 
 button{
@@ -110,7 +111,7 @@ padding: 6px;
 .reset-btn {
   background-color: transparent;
   color: #e2dfdc;
-  border: 1px solid #dad5d0;
+  border: 1px solid #043c5c9c;
   position: relative;
   border-radius: 10px;
 }
@@ -122,7 +123,7 @@ padding: 6px;
   height: 100%;
   top: 0;
   left: 0;
-  background-color: #0000006b;
+  background-color: #043c5c;
   transition: width 0.3s ease;
   z-index: -1;
   border-radius: 10px;
@@ -140,7 +141,7 @@ padding: 6px;
 .history-card{
     width: 250px;
     height: 20%;
-    background: #834116a9;
+    background: #043c5c9c;
     box-shadow: 0px 0px 10px 0.1px rgba(27, 3, 3, 0.521);
     gap:10px;
     position: absolute;
