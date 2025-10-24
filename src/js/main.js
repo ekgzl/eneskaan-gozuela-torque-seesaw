@@ -266,8 +266,6 @@ function createGhostElement(event) {
     ghostElement.style.width = "72px";
   } else {
     ghostElement.style.width = "48px";
-    ghostElement.style.width = "48px";
-
     ghostElement.style.height = "48px";
     ghostElement.style.top = `40px`;
   }
