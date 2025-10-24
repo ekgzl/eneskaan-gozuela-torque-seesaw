@@ -45,7 +45,14 @@
             </div>
             <div class="section s2 rounded-box">
               <p>NEXT WEIGHT</p>
-              <p class="measurement"><span id="next-weight"></span> kg</p>
+              <p class="measurement">
+                <img
+                  class="next-weight-icon"
+                  id="next-weight-icon"
+                  src="./public/weights/weight-1kg.png"
+                />
+                <span id="next-weight"></span> kg
+              </p>
             </div>
           </div>
           <button class="reset-btn" onclick="resetSimulation()">
@@ -64,6 +71,7 @@
         </div>
       </div>
     </main>
+    <audio id="drop-sound" src="./public/drop-sound.mp3"></audio>
     <script src="./src/js/main.js"></script>
   </body>
 </html>

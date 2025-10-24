@@ -9,7 +9,7 @@ const historyCard = document.getElementById("history-card");
 const plankBox = document.getElementById("plank-box");
 //querycSelector -> class
 nextWeightDisplay.innerHTML = generateRandomWeight();
-
+updateNextWeightIcon(nextWeightDisplay.textContent);
 let objects = [];
 let rightTorque = 0;
 let leftTorque = 0;
@@ -63,6 +63,7 @@ function handleClick(droppedObject) {
   pushInLog(createHistoryMessage(droppedObject));
   let randomWeight = generateRandomWeight();
   nextWeightDisplay.innerHTML = randomWeight;
+  updateNextWeightIcon(randomWeight);
   saveToLocalStorage();
 }
 
@@ -108,7 +109,11 @@ insideScreen.addEventListener("click", function (event) {
   const centerPoint = this.offsetWidth / 2;
   const distance = event.offsetX;
   const weight = parseInt(nextWeightDisplay.textContent);
-
+  const dropSound = document.getElementById("drop-sound");
+  if (dropSound) {
+    dropSound.currentTime = 0;
+    dropSound.play();
+  }
   if (distance < centerPoint) {
     const realDistance = (centerPoint - distance) / 50;
     const droppedObject = {
@@ -169,6 +174,7 @@ function resetSimulation() {
     weight.remove();
   });
   nextWeightDisplay.innerHTML = generateRandomWeight();
+  updateNextWeightIcon(nextWeightDisplay.textContent);
   localStorage.removeItem("seesaw");
 }
 
@@ -206,6 +212,7 @@ function loadFromLocalStorage() {
     leftWeightDisplay.innerHTML = totalLeftWeight;
     rightWeightDisplay.innerHTML = totalRightWeight;
     nextWeightDisplay.innerHTML = simulationData.nextWeight;
+    updateNextWeightIcon(simulationData.nextWeight);
     historyListUl.innerHTML = simulationData.historyLog;
 
     objects.forEach((obj) => {
@@ -275,6 +282,13 @@ function createGhostElement(event) {
   ghostElement.style.left = `${
     plankOffsetLeft + event.offsetX - elementWidth / 2
   }px`;
+}
+
+function updateNextWeightIcon(weight) {
+  const icon = document.getElementById("next-weight-icon");
+  if (icon) {
+    icon.src = `../../public/weights/weight-${weight}kg.png`;
+  }
 }
 
 loadFromLocalStorage();
